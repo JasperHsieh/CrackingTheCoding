@@ -26,13 +26,21 @@ public class RotateMatrix {
         int tmp = 0;
         int layer = 0;
         int offset = matrix.length-1;
+        System.out.println("offset:" + offset);
         for(int i=0; i<matrix.length/2; i++){
-            for(int j=offset-i; j>=i; j--){
-                tmp = matrix[offset-j][i]; // save top
-                matrix[offset-j][i] = matrix[i][j]; // left to top
-                matrix[i][j] = matrix[j][offset-i]; // bottom to left
-                matrix[j][offset-i] = matrix[offset-i][offset-j]; //right to bottom
-                matrix[offset-i][offset-j] = tmp; //top to right
+            for(int j=offset-i; j>i; j--){
+                System.out.println("(" + i + "," + j + ")");
+                int top = matrix[i][offset-j];
+                int left = matrix[j][i];
+                int bottom = matrix[offset-i][j];
+                int right = matrix[offset-j][offset-i];
+                tmp = top; // save top
+                matrix[i][offset-j] = left; // left to top
+                matrix[j][i] = bottom; // bottom to left
+                matrix[offset-i][j] = right; //right to bottom
+                matrix[offset-j][offset-i] = top; //top to right
+                System.out.println(top + " " + left + " " + bottom + " " + right);
+                System.out.println();
             }
         }
         return true;
