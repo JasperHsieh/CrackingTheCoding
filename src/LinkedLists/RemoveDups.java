@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class RemoveDups {
 
     public static void main(String[] args) {
@@ -6,7 +8,8 @@ public class RemoveDups {
         int [] data = new int[]{1,2,3,4,5,5,1,8,2,1};
         Node head = makeList(data);
         printLinkedList(head);
-        deleteDups(head);
+        //deleteDups1(head);
+        deleteDups2(head);
         printLinkedList(head);
     }
     
@@ -49,25 +52,35 @@ public class RemoveDups {
         return head; 
     }
 
-    static void deleteDups(Node head){
+    // O(n^2)-time, O(1)-space
+    static void deleteDups1(Node head){
         if(head == null) return;
         Node index1 = head;
-        while(index1.next.next != null){
+        while(index1.next != null){
             Node index2 = index1;
             while(index2.next != null){
-                log(index1.data + "," + index2.data);
+                //log(index1.data + "," + index2.data);
                 if(index1.data == index2.next.data){
                     index2.next = index2.next.next;
+                }else{
+                   index2 = index2.next;
                 }
-                index2 = index2.next;
-                if(index2 == null){
-                    log("break");
-                    break;
-                } 
             }
             index1 = index1.next;
-            if(index1.next == null)break; 
         }
     }
-
+    // O(n)-time, O(n)-space
+    static void deleteDups2(Node head){
+        HashSet<Integer> set = new HashSet<Integer>();
+        Node prev = null;
+        while(head != null){
+            if(set.contains(head.data)){
+                prev.next = head.next;
+            }else{
+                set.add(head.data);
+                prev = head;
+            }
+            head = head.next;
+        }
+    }
 }
