@@ -56,6 +56,7 @@ public class SumLists {
     
     static Node sum(Node h1, Node h2){
         Node head = null;
+        Node last = null;
         int quotient = 0;
         int reminder = 0;
         while(h1 != null || h2 != null){
@@ -66,8 +67,14 @@ public class SumLists {
             reminder = (quotient + number1 + number2)%10;
             quotient = (quotient + number1 + number2)/10;
             Node n = new Node(reminder);
-            n.next = head;
-            head = n;
+            //n.next = head;
+            //head = n;
+            if(head == null){
+                head = n;
+            }else{
+                last.next = n;
+            }
+            last = n;
             if(h1 != null)h1 = h1.next;
             if(h2 != null)h2 = h2.next;
         }
